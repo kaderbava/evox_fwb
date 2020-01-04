@@ -539,6 +539,10 @@
     <string name="qs_show_battery_estimate_title">Battery estimates</string>
     <string name="qs_show_battery_estimate_summary">Show estimated remaining battery life next to the icon</string>
 
+    <!-- Gestures: Touchscreen gestures -->
+    <string name="touchscreen_gesture_settings_title">Touchscreen gestures</string>
+    <string name="touchscreen_gesture_settings_summary">Perform various touchscreen gestures for quick actions</string>
+
     <!-- Combined signal icons -->
     <string name="combined_status_bar_signal_icons_title">Combined signal icons</string>
     <string name="combined_status_bar_signal_icons_summary">Enable combined signal icons in statusbar</string>
