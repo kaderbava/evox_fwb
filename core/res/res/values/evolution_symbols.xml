@@ -161,6 +161,9 @@
   <!-- Whether device has a big physical display cutout -->
   <java-symbol type="bool" name="config_physicalDisplayCutoutCentered" />
 
+  <!-- Enable face auth when swiping security view -->
+  <java-symbol type="bool" name="config_faceAuthOnSecurityView" />
+
   <!-- Ambient notification light color -->
   <java-symbol type="integer" name="config_ambientNotificationDefaultColor" />
 
