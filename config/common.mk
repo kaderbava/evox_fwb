@@ -78,6 +78,7 @@ PRODUCT_PACKAGES += \
     librs_jni \
     Stk \
     AEXPapers \
+    TouchGestures \
     DuckDuckGo \
     MusicPlayerGO \
     Recorder \
