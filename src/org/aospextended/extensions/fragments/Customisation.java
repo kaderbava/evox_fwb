@@ -56,6 +56,7 @@ import android.view.View;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.internal.util.aospextended.AEXUtils;
 import com.android.settings.Utils;
 
 import org.aospextended.support.colorpicker.ColorPickerPreference;
@@ -80,6 +81,13 @@ public class Customisation extends SettingsPreferenceFragment implements OnPrefe
 
         final ContentResolver resolver = getActivity().getContentResolver();
         final PreferenceScreen screen = getPreferenceScreen();
+
+        boolean udfpsResPkgInstalled = AEXUtils.isPackageInstalled(getContext(),
+                "org.aospextended.udfps.resources");
+        PreferenceCategory udfps = (PreferenceCategory) screen.findPreference("udfps_category");
+        if (!udfpsResPkgInstalled) {
+            screen.removePreference(udfps);
+        }
     }
 
     @Override
