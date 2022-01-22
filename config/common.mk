@@ -214,6 +214,12 @@ PRODUCT_PACKAGES += \
     GoogleCameraGo
 endif
 
+# UDFPS Animations
+ifeq ($(EXTRA_UDFPS_ANIMATIONS),true)
+PRODUCT_PACKAGES += \
+    UdfpsResources
+endif
+
 ifneq ($(WITH_GAPPS),true)
 #ifeq ($(PRODUCT_TYPE), go)
 #PRODUCT_PACKAGES += \
