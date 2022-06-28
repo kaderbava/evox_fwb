@@ -59,20 +59,17 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
 
     public static final String TAG = "QuickSettings";
 
-    private static final String KEY_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
-    private static final String KEY_BRIGHTNESS_SLIDER_POSITION = "qs_brightness_slider_position";
-    private static final String KEY_SHOW_AUTO_BRIGHTNESS = "qs_show_auto_brightness";
-    private static final String KEY_PREF_TILE_ANIM_STYLE = "qs_tile_animation_style";
-    private static final String KEY_PREF_TILE_ANIM_DURATION = "qs_tile_animation_duration";
-    private static final String KEY_PREF_TILE_ANIM_INTERPOLATOR = "qs_tile_animation_interpolator";
+    private static final String BRIGHTNESS_SLIDER = "qs_show_brightness";
+
+    private static final String KEY_PREF_TILE_ANIM_STYLE = "anim_tile_style";
+    private static final String KEY_PREF_TILE_ANIM_DURATION = "anim_tile_duration";
+    private static final String KEY_PREF_TILE_ANIM_INTERPOLATOR = "anim_tile_interpolator";
 
     private ListPreference mTileAnimationInterpolator;
     private ListPreference mTileAnimationStyle;
     private SystemSettingSeekBarPreference mTileAnimationDuration;
-    private ListPreference mShowBrightnessSlider;
-    private ListPreference mBrightnessSliderPosition;
     private ListPreference mQuickPulldown;
-    private SwitchPreference mShowAutoBrightness;
+    private SecureSettingMasterSwitchPreference mBrightnessSlider;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -80,25 +77,15 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         addPreferencesFromResource(R.xml.evolution_settings_quicksettings);
 
         final Context mContext = getActivity().getApplicationContext();
-        final ContentResolver resolver = mContext.getContentResolver();
+        final ContentResolver resolver = getActivity().getContentResolver();
         final PreferenceScreen prefSet = getPreferenceScreen();
 
-        mShowBrightnessSlider = findPreference(KEY_SHOW_BRIGHTNESS_SLIDER);
-        mShowBrightnessSlider.setOnPreferenceChangeListener(this);
-        boolean showSlider = Settings.Secure.getIntForUser(resolver,
-                Settings.Secure.QS_SHOW_BRIGHTNESS_SLIDER, 1, UserHandle.USER_CURRENT) > 0;
-
-        mBrightnessSliderPosition = findPreference(KEY_BRIGHTNESS_SLIDER_POSITION);
-        mBrightnessSliderPosition.setEnabled(showSlider);
-
-        mShowAutoBrightness = findPreference(KEY_SHOW_AUTO_BRIGHTNESS);
-        boolean automaticAvailable = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_automatic_brightness_available);
-        if (automaticAvailable) {
-            mShowAutoBrightness.setEnabled(showSlider);
-        } else {
-            prefSet.removePreference(mShowAutoBrightness);
-        }
+        mBrightnessSlider = (SecureSettingMasterSwitchPreference)
+                findPreference(BRIGHTNESS_SLIDER);
+        mBrightnessSlider.setOnPreferenceChangeListener(this);
+        boolean enabled = Settings.Secure.getInt(resolver,
+                BRIGHTNESS_SLIDER, 1) == 1;
+        mBrightnessSlider.setChecked(enabled);
 
         int qpmode = Settings.System.getIntForUser(getContentResolver(),
                 Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN, 0, UserHandle.USER_CURRENT);
@@ -114,18 +101,17 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         mTileAnimationStyle.setOnPreferenceChangeListener(this);
 
         int tileAnimationStyle = Settings.System.getIntForUser(resolver,
-                Settings.System.QS_TILE_ANIMATION_STYLE, 0, UserHandle.USER_CURRENT);
+                Settings.System.ANIM_TILE_STYLE, 0, UserHandle.USER_CURRENT);
         updateAnimTileStyle(tileAnimationStyle);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
-        if (preference == mShowBrightnessSlider) {
-            int value = Integer.parseInt((String) newValue);
-            mBrightnessSliderPosition.setEnabled(value > 0);
-            if (mShowAutoBrightness != null)
-                mShowAutoBrightness.setEnabled(value > 0);
+        if (preference == mBrightnessSlider) {
+            Boolean value = (Boolean) newValue;
+            Settings.Secure.putInt(resolver,
+                    BRIGHTNESS_SLIDER, value ? 1 : 0);
             return true;
         } else if (preference == mQuickPulldown) {
             int value = Integer.parseInt((String) newValue);
