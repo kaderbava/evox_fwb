@@ -70,6 +70,9 @@
     <dimen name="screenshot_preview_corner_radius">20dp</dimen>
     <dimen name="screenshot_button_corner_radius">20dp</dimen>
 
+    <!-- QQS Brightness slider -->
+    <dimen name="quick_qs_brightness_margin_top">24dp</dimen>
+
     <!-- Udfps fingerprint animation -->
     <dimen name="udfps_animation_size">280dp</dimen>
     <dimen name="udfps_animation_offset">0dp</dimen>
@@ -83,16 +86,6 @@
 
     <!-- Floating rotation button margin when on 2-button navbar mode -->
     <dimen name="floating_rotation_button_min_margin_navbar">60dp</dimen>
-
-    <!-- QQS Brightness slider -->
-    <dimen name="qqs_top_brightness_margin_top">4dp</dimen>
-    <dimen name="qqs_top_brightness_margin_bottom">12dp</dimen>
-    <dimen name="qqs_bottom_brightness_margin_top">12dp</dimen>
-
-    <!-- QS Brightness slider -->
-    <dimen name="qs_top_brightness_margin_top">8dp</dimen>
-    <dimen name="qs_top_brightness_margin_bottom">10dp</dimen>
-    <dimen name="qs_bottom_brightness_margin_top">10dp</dimen>
 
     <!-- Width of the battery icon in the status bar when set to circle style. -->
     <dimen name="status_bar_battery_icon_circle_width">14.5dp</dimen>

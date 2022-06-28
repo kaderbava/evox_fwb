@@ -6667,19 +6667,19 @@ public final class Settings {
          * Change quick settings tiles animation style
          * @hide
          */
-        public static final String QS_TILE_ANIMATION_STYLE = "qs_tile_animation_style";
+        public static final String ANIM_TILE_STYLE = "anim_tile_style";
 
         /**
          * Change quick settings tiles animation duration
          * @hide
          */
-        public static final String QS_TILE_ANIMATION_DURATION = "qs_tile_animation_duration";
+        public static final String ANIM_TILE_DURATION = "anim_tile_duration";
 
         /**
          * Change quick settings tiles interpolator
          * @hide
          */
-        public static final String QS_TILE_ANIMATION_INTERPOLATOR = "qs_tile_animation_interpolator";
+        public static final String ANIM_TILE_INTERPOLATOR = "anim_tile_interpolator";
 
         /**
          * Whether to take partial screenshot with volume down + power click.
@@ -12313,25 +12313,26 @@ public final class Settings {
         public static final String SWAP_CAPACITIVE_KEYS = "swap_capacitive_keys";
 
         /**
-         * Whether to show the brightness slider in quick settings panel.
+         * Whether to show QS brightness slider
          * @hide
          */
-        public static final String QS_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
+        @Readable
+        public static final String QS_SHOW_BRIGHTNESS = "qs_show_brightness";
 
         /**
-         * Whether to show the brightness slider in quick settings panel.
-         * 0 = Top, 1 = Bottom
+         * Whether to show QS brightness slider below the tiles
          * @hide
          */
-        public static final String QS_BRIGHTNESS_SLIDER_POSITION = "qs_brightness_slider_position";
+        @Readable
+        public static final String QS_BRIGHTNESS_POSITION_BOTTOM = "qs_brightness_position_bottom";
 
         /**
-         * Whether to show the auto brightness icon in quick settings panel.
+         * Whether to show QS auto brightness toggle button
          * @hide
          */
-        public static final String QS_SHOW_AUTO_BRIGHTNESS = "qs_show_auto_brightness";
+        public static final String QS_SHOW_AUTO_BRIGHTNESS_BUTTON = "qs_show_auto_brightness_button";
 
-         /**
+        /**
          * Enable udfps detection even when screen is off
          * Default value is 0
          * @hide

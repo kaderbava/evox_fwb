@@ -50,10 +50,11 @@ public class BrightnessSliderController extends ViewController<BrightnessSliderV
 
     private Listener mListener;
     private ToggleSlider mMirror;
-    private ImageView mIcon;
     private BrightnessMirrorController mMirrorController;
     private boolean mTracking;
     private final FalsingManager mFalsingManager;
+
+    private ImageView mIconView;
 
     private final Gefingerpoken mOnInterceptListener = new Gefingerpoken() {
         @Override
@@ -74,10 +75,11 @@ public class BrightnessSliderController extends ViewController<BrightnessSliderV
 
     BrightnessSliderController(
             BrightnessSliderView brightnessSliderView,
+            ImageView icon,
             FalsingManager falsingManager) {
         super(brightnessSliderView);
+        mIconView = icon;
         mFalsingManager = falsingManager;
-        mIcon = mView.findViewById(R.id.brightness_icon);
     }
 
     /**
@@ -87,8 +89,8 @@ public class BrightnessSliderController extends ViewController<BrightnessSliderV
         return mView;
     }
 
-    public ImageView getIcon() {
-        return mIcon;
+    public ImageView getIconView() {
+        return mIconView;
     }
 
     @Override
@@ -260,7 +262,8 @@ public class BrightnessSliderController extends ViewController<BrightnessSliderV
             int layout = getLayout();
             BrightnessSliderView root = (BrightnessSliderView) LayoutInflater.from(context)
                     .inflate(layout, viewRoot, false);
-            return new BrightnessSliderController(root, mFalsingManager);
+            ImageView icon = (ImageView) root.findViewById(R.id.brightness_icon);
+            return new BrightnessSliderController(root, icon, mFalsingManager);
         }
 
         /** Get the layout to inflate based on what slider to use */

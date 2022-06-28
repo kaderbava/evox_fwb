@@ -16,7 +16,6 @@
 
 package com.android.systemui.qs;
 
-import android.annotation.NonNull;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.AttributeSet;
@@ -29,14 +28,13 @@ import com.android.systemui.R;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTile.SignalState;
 import com.android.systemui.plugins.qs.QSTile.State;
-import com.android.systemui.tuner.TunerService;
 
 import org.omnirom.omnilib.utils.OmniUtils;
 
 /**
  * Version of QSPanel that only shows N Quick Tiles in the QS Header.
  */
-public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
+public class QuickQSPanel extends QSPanel {
 
     private static final String TAG = "QuickQSPanel";
     // A fallback value for max tiles number when setting via Tuner (parseNumTiles)
@@ -67,40 +65,6 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
 	mMaxColumnsPortrait = OmniUtils.getQuickQSColumnsPortrait(mContext, mMaxTiles);
 	mMaxColumnsLandscape = 5;
         mMaxColumnsMediaPlayer = 3;
-    }
-
-    @Override
-    public void setBrightnessView(@NonNull View view) {
-        if (mBrightnessView != null) {
-            removeView(mBrightnessView);
-        }
-        mBrightnessView = view;
-        mAutoBrightnessView = view.findViewById(R.id.brightness_icon);
-        setBrightnessViewMargin(true);
-        if (mBrightnessView != null) {
-            addView(mBrightnessView);
-        }
-    }
-
-    View getBrightnessView() {
-        return mBrightnessView;
-    }
-
-    private void setBrightnessViewMargin(boolean top) {
-        if (mBrightnessView != null) {
-            MarginLayoutParams lp = (MarginLayoutParams) mBrightnessView.getLayoutParams();
-            if (top) {
-                lp.topMargin = mContext.getResources()
-                        .getDimensionPixelSize(R.dimen.qqs_top_brightness_margin_top);
-                lp.bottomMargin = mContext.getResources()
-                        .getDimensionPixelSize(R.dimen.qqs_top_brightness_margin_bottom);
-            } else {
-                lp.topMargin = mContext.getResources()
-                        .getDimensionPixelSize(R.dimen.qqs_bottom_brightness_margin_top);
-                lp.bottomMargin = 0;
-            }
-            mBrightnessView.setLayoutParams(lp);
-        }
     }
 
     @Override
@@ -182,43 +146,6 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
 	    mMaxTiles = Math.max(DEFAULT_MIN_TILES, maxTiles);
        }
         
-    }
-
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        switch (key) {
-            case QS_SHOW_BRIGHTNESS_SLIDER:
-                boolean value =
-                        TunerService.parseInteger(newValue, 1) > 1;
-                if (mBrightnessView != null) {
-                    mBrightnessView.setVisibility(value ? VISIBLE : GONE);
-                }
-                break;
-            case QS_BRIGHTNESS_SLIDER_POSITION:
-                mTop = TunerService.parseInteger(newValue, 0) == 0;
-                updateBrightnessSliderPosition();
-                break;
-            case QS_SHOW_AUTO_BRIGHTNESS:
-                if (mAutoBrightnessView != null) {
-                    mAutoBrightnessView.setVisibility(mIsAutomaticBrightnessAvailable &&
-                            TunerService.parseIntegerSwitch(newValue, true) ? View.VISIBLE : View.GONE);
-                }
-                break;
-            case QS_TILE_ANIMATION_STYLE:
-                mAnimStyle =
-                       TunerService.parseInteger(newValue, 0);
-                break;
-            case QS_TILE_ANIMATION_DURATION:
-                mAnimDuration =
-                       TunerService.parseInteger(newValue, 1);
-                break;
-            case QS_TILE_ANIMATION_INTERPOLATOR:
-                mInterpolatorType =
-                       TunerService.parseInteger(newValue, 0);
-                break;
-            default:
-                break;
-         }
     }
 
     public int getNumQuickTiles() {
