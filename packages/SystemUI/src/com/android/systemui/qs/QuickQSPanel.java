@@ -76,7 +76,7 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
         }
         mBrightnessView = view;
         mAutoBrightnessView = view.findViewById(R.id.brightness_icon);
-        setBrightnessViewMargin(mTop);
+        setBrightnessViewMargin(true);
         if (mBrightnessView != null) {
             addView(mBrightnessView);
         }
@@ -190,10 +190,34 @@ public class QuickQSPanel extends QSPanel implements TunerService.Tunable {
             case QS_SHOW_BRIGHTNESS_SLIDER:
                 boolean value =
                         TunerService.parseInteger(newValue, 1) > 1;
-                super.onTuningChanged(key, value ? newValue : "0");
+                if (mBrightnessView != null) {
+                    mBrightnessView.setVisibility(value ? VISIBLE : GONE);
+                }
+                break;
+            case QS_BRIGHTNESS_SLIDER_POSITION:
+                mTop = TunerService.parseInteger(newValue, 0) == 0;
+                updateBrightnessSliderPosition();
+                break;
+            case QS_SHOW_AUTO_BRIGHTNESS:
+                if (mAutoBrightnessView != null) {
+                    mAutoBrightnessView.setVisibility(mIsAutomaticBrightnessAvailable &&
+                            TunerService.parseIntegerSwitch(newValue, true) ? View.VISIBLE : View.GONE);
+                }
+                break;
+            case QS_TILE_ANIMATION_STYLE:
+                mAnimStyle =
+                       TunerService.parseInteger(newValue, 0);
+                break;
+            case QS_TILE_ANIMATION_DURATION:
+                mAnimDuration =
+                       TunerService.parseInteger(newValue, 1);
+                break;
+            case QS_TILE_ANIMATION_INTERPOLATOR:
+                mInterpolatorType =
+                       TunerService.parseInteger(newValue, 0);
                 break;
             default:
-                super.onTuningChanged(key, newValue);
+                break;
          }
     }
 
