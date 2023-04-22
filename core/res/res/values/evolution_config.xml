@@ -451,9 +451,6 @@
     <!-- Display color inversion availability -->
     <bool name="config_displayInversionAvailable">true</bool>
 
-    <!-- Boost Framework -->
-    <bool name="config_supportsBoostFramework">false</bool>
-
     <!-- Whether the device supports Smart Pixels -->
     <bool name="config_supportSmartPixels">false</bool>
 
